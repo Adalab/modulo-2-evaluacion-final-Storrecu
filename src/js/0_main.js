@@ -26,7 +26,7 @@ if (storedFavorites) {
 const addToFavourites = () => {
   const allShows = document.querySelectorAll('.js-card');
   for (const item of allShows) {
-    item.addEventListener('click', handleClickShow);
+    item.addEventListener('click', printConsole);
   }
 };
 
@@ -56,9 +56,14 @@ function renderShow() {
                 ? item.show.image.medium
                 : '//via.placeholder.com/210x295/ffffff/666666/?text=TV'
             }"/> 
-            <h2 class="js-card-title">${item.show.name} </h2>`;
+            <h2 class="js-card-title">${item.show.name} </h2>
+            <p> ${item.show.genres} </p>`;
             showElement += '</li>';
             listForm.innerHTML += showElement;
+            for (let i = 0; i < item.show.genres.length; i++) {
+              const genre = item.show.genres[i];
+              showElement += `<p> ${genre} </p>`;
+            }
           }
           addToFavourites();
         }
@@ -106,6 +111,15 @@ function handleDeleteBtn() {
 function handleSearchButton(event) {
   event.preventDefault();
   renderShow();
+}
+
+function printConsole(event) {
+  event.preventDefault();
+  const elementClick = event.currentTarget.id;
+  let obtainName = showsList.find(
+    (item) => item.show.id === parseInt(elementClick)
+  );
+  console.log(obtainName.show.name);
 }
 
 // Función manejadora li dinámicos
